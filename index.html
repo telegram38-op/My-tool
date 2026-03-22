@@ -28,18 +28,19 @@
 </div>
 
 <script>
-    // Yahan apna Render URL fix kar dein
-    const RENDER_BASE_URL = "https://link-bridge-thvo.onrender.com/";
+    // Updated Base URL
+    const RENDER_BASE_URL = "https://chrome-redirect.onrender.com/";
 
     function generateLink() {
-        const input = document.getElementById('targetLink').value;
+        const input = document.getElementById('targetLink').value.trim();
         if(!input) return alert("Please enter a link!");
 
         // Base64 Encode the link
         const encoded = btoa(input);
         
-        // Final URL construct karein
-        const finalUrl = RENDER_BASE_URL + "?url=" + encoded;
+        // Ensure the base URL ends with a slash before adding the query
+        const base = RENDER_BASE_URL.endsWith('/') ? RENDER_BASE_URL : RENDER_BASE_URL + '/';
+        const finalUrl = base + "?url=" + encoded;
 
         const resultDiv = document.getElementById('result');
         const copyBtn = document.getElementById('copyBtn');
