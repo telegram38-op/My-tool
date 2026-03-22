@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master Link Generator</title>
+    <style>
+        body { font-family: sans-serif; background: #f0f2f5; padding: 20px; display: flex; justify-content: center; }
+        .box { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 500px; width: 100%; }
+        h2 { color: #1a73e8; margin-top: 0; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 8px; box-sizing: border-box; }
+        button { width: 100%; padding: 12px; background: #1a73e8; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; }
+        #result { margin-top: 20px; padding: 15px; background: #e8f0fe; border-radius: 8px; word-break: break-all; display: none; border: 1px dashed #1a73e8; }
+        .copy-btn { background: #34a853; margin-top: 10px; display: none; }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>🔗 Link Generator</h2>
+    <p style="font-size: 14px; color: #666;">Apna Site B ka link niche dalein:</p>
+    
+    <input type="text" id="targetLink" placeholder="https://get2short.com/..." />
+    <button onclick="generateLink()">Generate Encoded Link</button>
+
+    <div id="result"></div>
+    <button id="copyBtn" class="copy-btn" onclick="copyToClipboard()">Copy Link</button>
+</div>
+
+<script>
+    // Yahan apna Render URL fix kar dein
+    const RENDER_BASE_URL = "https://link-bridge-thvo.onrender.com/";
+
+    function generateLink() {
+        const input = document.getElementById('targetLink').value;
+        if(!input) return alert("Please enter a link!");
+
+        // Base64 Encode the link
+        const encoded = btoa(input);
+        
+        // Final URL construct karein
+        const finalUrl = RENDER_BASE_URL + "?url=" + encoded;
+
+        const resultDiv = document.getElementById('result');
+        const copyBtn = document.getElementById('copyBtn');
+        
+        resultDiv.style.display = "block";
+        resultDiv.innerText = finalUrl;
+        copyBtn.style.display = "block";
+    }
+
+    function copyToClipboard() {
+        const text = document.getElementById('result').innerText;
+        navigator.clipboard.writeText(text).then(() => {
+            alert("Link copied to clipboard!");
+        });
+    }
+</script>
+
+</body>
+</html>
